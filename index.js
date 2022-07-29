@@ -1,9 +1,17 @@
 //to setup and fire the express server
 const express= require('express');
+const cookieParser =require('cookie-parser');
 const app=express();
 const port =8000;
 //add express ejs library for layouts
 const expressLayouts= require('express-ejs-layouts');
+//adding mondodb using mongoose
+const db= require('./config/mongoose');
+
+// app.use(express.urlencoded()); depriciated
+const bodyParser= require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
 
 app.use(express.static('./assets'));
 
