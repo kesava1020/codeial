@@ -10,6 +10,8 @@ router.use('/users', require('./users'));
 
 router.use('/posts',require('./posts'));
 
+router.use('/comments',require('./comments'));
+
 //for an further routers, access from here
 //router.use('/routerName', require('./routerfile'));
 module.exports=router;
