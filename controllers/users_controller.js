@@ -1,12 +1,17 @@
 const User = require("../models/user");
 
 module.exports.profile=function(request,response){
-    
+    User.findById(request.params.id, function(err,user){
+        return response.render('users_profile',{
+            title: 'User Profile',
+            profile_user: user
+        });
+    });
     // return response.end('<h1>User profile!</h1>');
 
-    return response.render('users_profile',{
-        title: "profile"
-    });
+    // return response.render('users_profile',{
+    //     title: "profile"
+    // });
 };
 
 //render the sign up page
