@@ -1,44 +1,36 @@
 const Post=require('../models/post');
 const User=require('../models/user');
 
-module.exports.home=function(request,response){
-    // console.log(request.cookies);
-    // response.cookie('User_id',25);
+module.exports.home= async function(request,response){
+    
 
-    // Post.find({},function(err,posts){
-    //     return response.render('home',{
-    //         title: "Codeial | Home",
-    //         posts: posts
-    //     });
-    // });
+    try{
 
-    //populate the suer of each post
-    Post.find({})
-    .populate('user')
-    .populate({
-        path:'comments',
-        populate:{
-            path:'user'
-        }
-    })
-    .exec(function(err,posts){
+        //populate the user of each post
+        let posts = await Post.find({})
+        .populate('user')
+        .populate({
+            path:'comments',
+            populate:{
+                path:'user'
+            }
+        });
+    
+        let users = await User.find({});
 
-        User.find({},function(err,users){
-            return response.render('home',{
-                title: "Codeial | Home",
-                posts: posts,
-                all_users: users
-            });
+        return response.render('home',{
+            title: "Codeial | Home",
+            posts: posts,
+            all_users: users
         });
 
-        // return response.render('home',{
-        //     title: "Codeial | Home",
-        //     posts: posts
-        // });
-    });
-    // return response.render('home',{
-    //     title: "Home"
-    // });
+    }catch(err){
+        console.log('Error',err);
+        return;
+    }
+
+    
+
 };
 
 //modules.exports.actionname= function(request,response){...};

@@ -7,12 +7,18 @@ module.exports.profile=function(request,response){
             profile_user: user
         });
     });
-    // return response.end('<h1>User profile!</h1>');
 
-    // return response.render('users_profile',{
-    //     title: "profile"
-    // });
 };
+
+module.exports.update=function(request,response){
+    if(request.user.id == request.params.id){
+        User.findByIdAndUpdate(request.params.id, request.body, function(err, user){
+            return response.redirect('back');
+        });
+    }else{
+        return response.status(401).send('Unauthorized');
+    }
+}
 
 //render the sign up page
 module.exports.signUp = function(request,response){
@@ -62,7 +68,6 @@ module.exports.create=function(request,response){
 
 //sign in and create a session for user
 module.exports.createSession=function(request,response){
-    //TODO later
     return response.redirect('/');
 }
 
