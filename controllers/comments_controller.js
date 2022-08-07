@@ -15,12 +15,13 @@ module.exports.create=async function(request,response){
             });
             post.comments.push(comment);
             post.save();
+            request.flash('success', 'Comment published!');
 
             response.redirect('/');
         }
 
     }catch(err){
-        console.log('Error',err);
+        request.flash('error', err);
         return;
     }
     
@@ -36,13 +37,14 @@ module.exports.destroy=async function(request,response){
             comment.remove();
 
             let post = await Post.findByIdAndUpdate(postId, { $pull: {comments : request.params.id}});
-
+            request.flash('success', 'Comment deleted!');
             return response.redirect('back');
         }else{
+            request.flash('error', 'Unauthorized');
             return response.redirect('back');  
         }
     }catch(err){
-        console.log('Error',err);
+        request.flash('error', err);
         return;
     }
     
