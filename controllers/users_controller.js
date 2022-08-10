@@ -79,10 +79,10 @@ module.exports.createSession=function(request,response){
 module.exports.destroySession=function(request,response){
     request.logout(function(err){
         if(err){request.flash('error', err); return;}
+        
         request.flash('success','You have logged out!');
+        return response.redirect('/');
     });
 
     
-
-    return response.redirect('/');
 }
